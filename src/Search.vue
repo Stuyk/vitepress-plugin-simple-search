@@ -37,24 +37,26 @@ const handleSearch = (event: any) => {
     return;
   }
 
-  const searchTerm = event.target['value']
+  let searchTerm = event.target['value']
   if (searchTerm.length <= 2) {
     searchResults.value = fileData.value;
     msToSearch.value = Date.now() - startTime;
     return;
   }
 
+  searchTerm = searchTerm.toLowerCase();
+
   const filesToSearch = [...fileData.value]
   const newResults = filesToSearch.filter(file => {
-    if (file.title && file.title.includes(searchData.value)) {
+    if (file.title && file.title.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    if (file.content && file.content.includes(searchData.value)) {
+    if (file.content && file.content.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
-    if (file.link && file.link.includes(searchData.value)) {
+    if (file.link && file.link.toLowerCase().includes(searchTerm)) {
       return true;
     }
 
@@ -128,7 +130,7 @@ onMounted(async () => {
           </div>
           <div class="search-results">
             <div v-if="searchResults.length >= 1">
-              <div class="search-time" v-if="msToSearch !== 0">
+              <div class="search-time">
                 {{ msToSearch}}ms for {{ searchResults.length }} Results
               </div>
               <a class="result" v-for="(result, index) in searchResults" :key="index" :href="result.link" @click="clearSearch">

@@ -9,7 +9,7 @@ import matter from 'gray-matter'
  * @return {string} 
  */
 function cleanupContent(content: string): string {
-  return content.replace(/[\W_]+/g , ' ');
+  return content.replace(/[\W_]+/g , ' ').toLowerCase();
 }
 
 /**
