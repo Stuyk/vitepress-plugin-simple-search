@@ -41,7 +41,7 @@ npm i vitepress-plugin-simple-search
 Create a file in `docs` called `vite.config.js` or `vite.config.ts`.
 
 ```js
-// docsvite.config.js
+// docs/vite.config.js
 import { SearchPlugin } from "vitepress-plugin-simple-search";
 import { defineConfig } from "vite";
 
