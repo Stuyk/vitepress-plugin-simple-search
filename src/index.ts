@@ -27,9 +27,6 @@ export function SimpleSearch(baseURL: string = ''): Plugin {
     }),
     resolveId(id) {
       if (id === virtualModuleId) {
-        console.log('-----------------------')
-        console.log('found id...' + id);
-        console.log(resolvedVirtualModuleId);
         return resolvedVirtualModuleId;
       }
     },
