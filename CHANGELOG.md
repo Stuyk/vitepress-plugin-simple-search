@@ -1,4 +1,4 @@
-# 1.1.3
+# 1.1.4
 
 - Change all content parsing to lowercase all data.
 - Change search terminology to always lowercase.
