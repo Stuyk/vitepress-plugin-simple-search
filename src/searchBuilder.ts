@@ -1,15 +1,22 @@
 import * as fs from 'fs-extra';
 import glob from 'glob';
-import matter from 'gray-matter'
+import matter from 'gray-matter';
+import { getOptions } from './options';
+import { FileSearchData } from './types/fileSearchData';
 
 /**
  * Strips content of lots of garabage.
  *
  * @param {string} content
- * @return {string} 
+ * @return {string}
  */
 function cleanupContent(content: string): string {
-  return content.replace(/[\W_]+/g , ' ').toLowerCase();
+    const options = getOptions();
+    if (typeof options.regexForContentStripping === 'undefined') {
+        return content;
+    }
+
+    return content.replace(options.regexForContentStripping, '').toLowerCase();
 }
 
 /**
@@ -20,26 +27,28 @@ function cleanupContent(content: string): string {
  * @export
  * @param {string} folder
  * @param {string} [baseURL='']
- * @return {Promise<Array<{title: string, content: string, link: string}>>}
+ * @return {Promise<FileSearchData>}
  */
-export async function buildDocumentation(folder: string, baseURL: string = ''): Promise<Array<{title: string, content: string, link: string}>> {
-  if (baseURL.length >= 1 && baseURL.charAt(baseURL.length - 1) === '/') {
-    baseURL = baseURL.slice(0, baseURL.length - 1);
-  }
-  
-  const files = glob.sync(`${folder}/**/*.md`.replace(/\\/gm, '/'));
-  const fileInfo: Array<{ title: string, content: string, link: string }> = [];
+export async function buildDocumentation(folder: string): Promise<FileSearchData> {
+    const files = glob.sync(`${folder}/**/*.md`.replace(/\\/gm, '/'));
+    const fileInfo: Array<{ title: string; content: string; link: string }> = [];
+    const options = getOptions();
 
-  for(let file of files) {
-    const data = fs.readFileSync(file).toString();
-    const frontMatter = matter(data)
+    for (let file of files) {
+        const data = fs.readFileSync(file).toString();
+        const frontMatter = matter(data);
 
-    if (typeof frontMatter.data['title'] === 'undefined') {
-      console.warn(`${file} does not have a 'title' for building search index.`);
+        if (typeof frontMatter.data['title'] === 'undefined') {
+            console.warn(`${file} does not have a 'title' for building search index.`);
+        }
+
+        const baseURL = options.baseURL ? options.baseURL : '';
+        fileInfo.push({
+            title: frontMatter.data.title,
+            content: cleanupContent(frontMatter.content),
+            link: file.replace(/.*docs/gm, baseURL).replace('.md', ''),
+        });
     }
 
-    fileInfo.push({ title: frontMatter.data.title, content: cleanupContent(frontMatter.content), link: file.replace(/.*docs/gm, '').replace('.md', baseURL) });
-  }
-
-  return fileInfo;
+    return fileInfo;
 }

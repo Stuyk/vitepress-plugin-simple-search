@@ -4,15 +4,16 @@
 
 Vitepress needs better offline search. Let's make it simple and quick.
 
-## Credit
-
-Thanks to everyone here in [this thread for offline search](https://github.com/vuejs/vitepress/issues/670) for getting the general idea implemented.
+Thanks to everyone in [this thread for offline search](https://github.com/vuejs/vitepress/issues/670) for getting the general idea implemented.
 
 ## Features
 
 * Utilizes front-matter for page titles.
 * Auto-strips content of extra tags.
 * Auto-reads all markdown documents, and creates search data based on that.
+* Ability to change baseURL for doc pathing.
+* Ability to change regexp for content stripping and searching content.
+* Ability to use quotes for stricter search results in-search.
 
 ## Required
 
@@ -52,10 +53,32 @@ export default defineConfig({
 
 ## Additional Options
 
-If you have a base url, append it inside of `SearchPlugin()`.
+These can be passed through the `SearchPlugin` function.
+
+```ts
+export interface Options {
+    /**
+     * Base URL to use for content link replacement.
+     *
+     * @type {string}
+     * @memberof Options
+     */
+    baseURL?: string;
+
+    /**
+     * Used as a regex content remover for non-matching characters.
+     * Setting this to undefined turns off all content stripping.
+     * May have unintended side effects.
+     *
+     * @type {RegExp | undefined}
+     * @memberof Options
+     */
+    regexForContentStripping?: RegExp | undefined;
+}
+```
 
 **Example**
 
 ```ts
-SearchPlugin('/my-repo')
+SearchPlugin({ baseURL: '/my-repo', regexForContentStripping: undefined });
 ```

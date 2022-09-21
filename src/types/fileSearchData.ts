@@ -1,0 +1,1 @@
+export type FileSearchData = Array<{title: string, content: string, link: string}>;

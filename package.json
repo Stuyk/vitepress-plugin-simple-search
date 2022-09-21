@@ -55,5 +55,11 @@
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
     "gray-matter": "^4.0.3"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "printWidth": 120,
+    "singleQuote": true,
+    "semi": true
   }
 }
