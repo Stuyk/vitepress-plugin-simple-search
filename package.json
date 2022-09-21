@@ -1,0 +1,59 @@
+{
+  "name": "vitepress-plugin-simple-search",
+  "version": "1.0.0",
+  "description": "A very simple offline search for your vitepress documentation.",
+  "author": "Stuyk",
+  "license": "MIT",
+  "types": "./dist/types/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/vitepress-plugin-simple-search.umd.js",
+  "module": "./dist/vitepress-plugin-simple-search.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vitepress-plugin-simple-search.es.js",
+      "require": "./dist/vitepress-plugin-simple-search.umd.js"
+    },
+    "./Search.vue": "./dist/Search.vue"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "postbuild": "vue-tsc --emitDeclarationOnly"
+  },
+  "engines": {
+    "node": "^14.13.1 || ^16.7.0 || >=18"
+  },
+  "homepage": "https://github.com/stuyk/vitepress-plugin-simple-search#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stuyk/vitepress-plugin-simple-search.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stuyk/vitepress-plugin-simple-search/issues"
+  },
+  "keywords": [
+    "vitepress",
+    "search",
+    "simple",
+    "offline"
+  ],
+  "peerDependencies": {
+    "vite": "2 || 3",
+    "vitepress": "^1.0.0-alpha.13",
+    "vue": "3"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/glob": "^8.0.0",
+    "@types/node": "^18.7.18",
+    "vite-plugin-static-copy": "^0.9.0",
+    "vue-tsc": "^0.40.5"
+  },
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "glob": "^8.0.3",
+    "gray-matter": "^4.0.3"
+  }
+}
