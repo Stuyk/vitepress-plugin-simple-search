@@ -22,7 +22,7 @@ export function SimpleSearch(baseURL: string = ''): Plugin {
     },
     config: () => ({
       resolve: {
-        alias: { "./VPNavBarSearch.vue": "vitepress-plugin-search/Search.vue" },
+        alias: { "./VPNavBarSearch.vue": "vitepress-plugin-simple-search/Search.vue" },
       },
     }),
 

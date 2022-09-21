@@ -95,7 +95,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 
 onMounted(async () => {
   //@ts-ignore
-  const filesToSearch = await import("virtual:vitepress-plugin-simple-search")
+  const filesToSearch: { default: FileSearchData } = await import("virtual:vitepress-plugin-simple-search")
   fileData.value = filesToSearch.default;
   searchResults.value = filesToSearch.default;
   console.log(`Vitepress Simple Search`);
