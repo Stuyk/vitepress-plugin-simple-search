@@ -11,11 +11,11 @@ import { buildDocumentation } from "./searchBuilder";
  */
 export function SimpleSearch(baseURL: string = ''): Plugin {
   let config: any;
-  const virtualModuleId = "virtual:vitepress-plugin-simple-search";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
+  const virtualModuleId = "virtual:simple-search";
+  const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
   return {
-    name: "vitepress-plugin-simple-search",
+    name: "simple-search",
     enforce: "pre",
     configResolved(resolvedConfig) {
       config = resolvedConfig;
@@ -25,28 +25,25 @@ export function SimpleSearch(baseURL: string = ''): Plugin {
         alias: { "./VPNavBarSearch.vue": "vitepress-plugin-simple-search/Search.vue" },
       },
     }),
-
-    async resolveId(id) {
+    resolveId(id) {
       if (id === virtualModuleId) {
+        console.log('-----------------------')
+        console.log('found id...' + id);
+        console.log(resolvedVirtualModuleId);
         return resolvedVirtualModuleId;
       }
     },
     async load(this, id) {
-      if (id !== resolvedVirtualModuleId) {
-        return;
+      if (id === resolvedVirtualModuleId) {
+          const fileData = await buildDocumentation(config.root, baseURL);
+          const javaScript: string =
+            "const data =" +
+            JSON.stringify(fileData) +
+            ";\n" +
+            "export default { data };"
+
+          return javaScript;
       }
-
-      if (config.build.ssr) {
-        return;
-      }
-
-      const fileData = await buildDocumentation(config.root, baseURL);
-
-      // Construct Virtual Module for Search Vue
-      return `
-        const data = ${JSON.stringify(fileData)};
-        export default data;
-        `
     },
   };
 }

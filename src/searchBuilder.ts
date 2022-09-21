@@ -9,12 +9,7 @@ import matter from 'gray-matter'
  * @return {string} 
  */
 function cleanupContent(content: string): string {
-  let newContent = content.replace(/\s+$/gm, '');
-  newContent = newContent.replace(/\{\{.*\}}/gm, '');
-  newContent = newContent.replace(/\#/gm, '');
-  newContent = newContent.replace(/\:\:\:/gm, '');
-  newContent = newContent.replace(/\!\[].*\)/gm, '');
-  return newContent;
+  return content.replace(/[\W_]+/g , ' ');
 }
 
 /**
