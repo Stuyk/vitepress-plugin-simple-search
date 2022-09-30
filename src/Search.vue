@@ -216,7 +216,7 @@ onMounted(async () => {
 
 .search-text {
     margin-left: 24px;
-    font-family: 'Inter';
+    font-family: var(--vp-font-family-base);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -278,7 +278,7 @@ onMounted(async () => {
     width: 100%;
     padding: 6px;
     font-size: 14px;
-    font-family: 'Inter';
+    font-family: var(--vp-font-family-base);
     padding-left: 12px;
     padding-right: 12px;
 }
@@ -305,6 +305,7 @@ onMounted(async () => {
 
 .result .content {
     font-size: 12px;
+    overflow-wrap: break-word !important;
 }
 
 .result .link {
