@@ -1,3 +1,9 @@
+# 1.2.1
+
+- Fix Readme
+- Fix Font Family Issue
+- Fix Overflow Issue
+
 # 1.2.0
 
 - Change all content parsing to lowercase all data.

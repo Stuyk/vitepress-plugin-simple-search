@@ -1,6 +1,6 @@
 {
   "name": "vitepress-plugin-simple-search",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A very simple offline search for your vitepress documentation.",
   "author": "Stuyk",
   "license": "MIT",
