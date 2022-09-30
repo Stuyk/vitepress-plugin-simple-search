@@ -43,17 +43,17 @@ Create a file in `docs` called `vite.config.js` or `vite.config.ts`.
 
 ```js
 // docs/vite.config.js
-import { SearchPlugin } from "vitepress-plugin-simple-search";
+import { SimpleSearch } from "vitepress-plugin-simple-search";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [SearchPlugin()],
+  plugins: [SimpleSearch()],
 });
 ```
 
 ## Additional Options
 
-These can be passed through the `SearchPlugin` function.
+These can be passed through the `SimpleSearch` function.
 
 ```ts
 export interface Options {
@@ -80,5 +80,5 @@ export interface Options {
 **Example**
 
 ```ts
-SearchPlugin({ baseURL: '/my-repo', regexForContentStripping: undefined });
+SimpleSearch({ baseURL: '/my-repo', regexForContentStripping: undefined });
 ```
