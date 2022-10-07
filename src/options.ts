@@ -21,6 +21,10 @@ export function setOptions(userOptions: Options): Options {
         }
     }
 
+    if (!options.partialsToIgnore) {
+        options.partialsToIgnore = [];
+    }
+
     return options;
 }
 

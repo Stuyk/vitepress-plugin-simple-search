@@ -14,6 +14,8 @@ Thanks to everyone in [this thread for offline search](https://github.com/vuejs/
 * Ability to change baseURL for doc pathing.
 * Ability to change regexp for content stripping and searching content.
 * Ability to use quotes for stricter search results in-search.
+* Option to change docs path.
+* Option to ignore specific files or folders based on partial naming.
 
 ## Required
 
@@ -64,6 +66,24 @@ export interface Options {
      * @memberof Options
      */
     baseURL?: string;
+
+    /**
+     * Pathway to docs folder.
+     * Must be an absolute path.
+     * Defaults to 'docs' folder.
+     *
+     * @type {string}
+     * @memberof Options
+     */
+    docsPath?: string;
+
+    /**
+     * A list of strings of partial file names or folders to ignore and not add to search.
+     *
+     * @type {Array<string>}
+     * @memberof Options
+     */
+    partialsToIgnore?: Array<string>;
 
     /**
      * Used as a regex content remover for non-matching characters.

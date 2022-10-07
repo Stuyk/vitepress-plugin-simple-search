@@ -1,3 +1,9 @@
+# 1.3.1
+
+- Added partial file names to ignore to an Array
+- Added node_modules to always be ignored
+- Added pathway for docs path
+
 # 1.2.1
 
 - Fix Readme

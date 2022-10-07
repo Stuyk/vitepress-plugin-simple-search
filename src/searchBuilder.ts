@@ -35,6 +35,17 @@ export async function buildDocumentation(folder: string): Promise<FileSearchData
     const options = getOptions();
 
     for (let file of files) {
+        if (file.includes('node_modules')) {
+            continue;
+        }
+
+        if (options.partialsToIgnore && options.partialsToIgnore.length >= 1) {
+            const partialIndex = options.partialsToIgnore.findIndex((partialName) => file.includes(partialName));
+            if (partialIndex !== -1) {
+                continue;
+            }
+        }
+
         const data = fs.readFileSync(file).toString();
         const frontMatter = matter(data);
 
