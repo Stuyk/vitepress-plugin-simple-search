@@ -1,4 +1,4 @@
-# 1.3.1
+# 1.3.0
 
 - Added partial file names to ignore to an Array
 - Added node_modules to always be ignored
