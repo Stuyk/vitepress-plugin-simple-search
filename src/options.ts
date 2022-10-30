@@ -2,6 +2,7 @@ import { Options } from './interfaces/options';
 
 let options: Options = {
     baseURL: '',
+    srcDir: '',
     regexForContentStripping: /[^a-zA-Z0-9._ ]+/g,
 };
 

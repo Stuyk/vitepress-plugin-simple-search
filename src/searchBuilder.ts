@@ -53,11 +53,12 @@ export async function buildDocumentation(folder: string): Promise<FileSearchData
             console.warn(`${file} does not have a 'title' for building search index.`);
         }
 
-        const baseURL = options.baseURL ? options.baseURL : '';
+        const baseURL = options.baseURL ? `${options.baseURL}/` : '';
+        const srcDir = options.srcDir ? `${options.srcDir}/` : '';
         fileInfo.push({
             title: frontMatter.data.title,
             content: cleanupContent(frontMatter.content),
-            link: file.replace(/.*docs/gm, baseURL).replace('.md', ''),
+            link: file.replace(new RegExp(`.*docs/${srcDir}`, 'gm'), baseURL).replace('.md', ''),
         });
     }
 

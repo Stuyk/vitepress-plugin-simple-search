@@ -8,6 +8,14 @@ export interface Options {
     baseURL?: string;
 
     /**
+     * SrcDir to docs folder
+     *
+     * @type {string}
+     * @memberof Options
+     */
+    srcDir?: string;
+
+    /**
      * Pathway to docs folder.
      * Must be an ABSOLUTE path. Not relative.
      *
