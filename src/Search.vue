@@ -257,7 +257,8 @@ onMounted(async () => {
     position: absolute;
     top: 10vh;
     background: var(--vp-c-bg-soft);
-    min-width: 600px;
+    width: 45%;
+    min-width: 225px;
     max-width: 600px;
     max-height: 500px;
     border-radius: 12px;
