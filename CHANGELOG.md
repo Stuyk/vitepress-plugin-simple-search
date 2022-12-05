@@ -1,3 +1,7 @@
+# 1.3.2
+
+- Add prepublish script.
+
 # 1.3.1
 
 - Fix scaling for mobile users
