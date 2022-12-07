@@ -2,7 +2,7 @@ import { Plugin } from 'vite';
 import { Options } from './interfaces/options';
 import { setOptions } from './options';
 import { buildDocumentation } from './searchBuilder';
-import fs from 'fs';
+import fs from 'fs-extra';
 
 /**
  * Initialize the plugin, and pass additional configuration options.
