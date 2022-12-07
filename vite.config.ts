@@ -1,7 +1,6 @@
 const path = require("path");
 const { defineConfig } = require("vite");
 import { viteStaticCopy } from "vite-plugin-static-copy";
-// import vue from '@vitejs/plugin-vue';
 
 module.exports = defineConfig({
   plugins: [
@@ -29,6 +28,7 @@ module.exports = defineConfig({
         // for externalized deps
         globals: {
           vue: "Vue",
+          'fs-extra': 'fs-extra',
         },
       },
     },
