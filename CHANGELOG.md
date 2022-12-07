@@ -1,3 +1,7 @@
+# 1.3.3
+
+- Add 'fs-extra' to external dependencies.
+
 # 1.3.2
 
 - Add prepublish script.
