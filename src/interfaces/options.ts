@@ -40,5 +40,5 @@ export interface Options {
      * @type {any => any | undefined}
      * @memberof Options
      */
-    preambleTransformer?: (any => any) | undefined;
+    preambleTransformer?: ((data: { [key: string]: any }) => { [key: string]: any }) | undefined;
 }

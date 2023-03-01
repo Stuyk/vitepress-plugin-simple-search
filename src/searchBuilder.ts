@@ -29,7 +29,10 @@ function cleanupContent(content: string): string {
  * @param {string} [baseURL='']
  * @return {Promise<FileSearchData>}
  */
-export async function buildDocumentation(folder: string, transformer: any => any): Promise<FileSearchData> {
+export async function buildDocumentation(
+    folder: string,
+    transformer: ((data: { [key: string]: any }) => { [key: string]: any }) | undefined = undefined
+): Promise<FileSearchData> {
     const files = glob.sync(`${folder}/**/*.md`.replace(/\\/gm, '/'));
     const fileInfo: Array<{ title: string; content: string; link: string }> = [];
     const options = getOptions();
@@ -48,7 +51,12 @@ export async function buildDocumentation(folder: string, transformer: any => any
 
         const data = fs.readFileSync(file).toString();
         const frontMatter = matter(data);
-        const frontMatterData = transformer(frontMatter.data);
+        let frontMatterData: { [key: string]: any };
+        if (typeof transformer !== 'undefined') {
+            frontMatterData = transformer(frontMatter.data);
+        } else {
+            frontMatterData = frontMatter.data;
+        }
 
         if (typeof frontMatterData['title'] === 'undefined') {
             console.warn(`${file} does not have a 'title' for building search index.`);
