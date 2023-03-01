@@ -3,6 +3,7 @@ import { Options } from './interfaces/options';
 let options: Options = {
     baseURL: '',
     regexForContentStripping: /[^a-zA-Z0-9._ ]+/g,
+    preambleTransformer: x => x, // No transformation
 };
 
 /**

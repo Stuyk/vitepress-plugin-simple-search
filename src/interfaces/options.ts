@@ -33,4 +33,12 @@ export interface Options {
      * @memberof Options
      */
     regexForContentStripping?: RegExp | undefined;
+
+    /**
+     * Used to transform the front matter.
+     *
+     * @type {any => any | undefined}
+     * @memberof Options
+     */
+    preambleTransformer?: (any => any) | undefined;
 }

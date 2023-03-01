@@ -43,7 +43,7 @@ export function SimpleSearch(userOptions: Options): Plugin {
                     throw new Error(`Docs pathway could not be found.`);
                 }
 
-                const fileData = await buildDocumentation(config.root);
+                const fileData = await buildDocumentation(config.root, userOptions.preambleTransformer);
                 const javaScript: string =
                     `const regexForContentStripping = ${options.regexForContentStripping}` +
                     ';\n' +

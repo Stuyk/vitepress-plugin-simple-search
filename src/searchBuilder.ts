@@ -29,7 +29,7 @@ function cleanupContent(content: string): string {
  * @param {string} [baseURL='']
  * @return {Promise<FileSearchData>}
  */
-export async function buildDocumentation(folder: string): Promise<FileSearchData> {
+export async function buildDocumentation(folder: string, transformer: any => any): Promise<FileSearchData> {
     const files = glob.sync(`${folder}/**/*.md`.replace(/\\/gm, '/'));
     const fileInfo: Array<{ title: string; content: string; link: string }> = [];
     const options = getOptions();
@@ -48,14 +48,15 @@ export async function buildDocumentation(folder: string): Promise<FileSearchData
 
         const data = fs.readFileSync(file).toString();
         const frontMatter = matter(data);
+        const frontMatterData = transformer(frontMatter.data);
 
-        if (typeof frontMatter.data['title'] === 'undefined') {
+        if (typeof frontMatterData['title'] === 'undefined') {
             console.warn(`${file} does not have a 'title' for building search index.`);
         }
 
         const baseURL = options.baseURL ? options.baseURL : '';
         fileInfo.push({
-            title: frontMatter.data.title,
+            title: frontMatterData.title,
             content: cleanupContent(frontMatter.content),
             link: file.replace(/.*docs/gm, baseURL).replace('.md', ''),
         });
