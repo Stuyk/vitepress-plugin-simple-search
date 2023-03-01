@@ -1,3 +1,7 @@
+# 1.3.4
+
+- Add 'preambleTransformer' to options. Adjusted typings accordingly.
+
 # 1.3.3
 
 - Add 'fs-extra' to external dependencies.
