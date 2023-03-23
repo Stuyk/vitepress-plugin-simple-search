@@ -41,4 +41,40 @@ export interface Options {
      * @memberof Options
      */
     preambleTransformer?: ((data: { [key: string]: any }) => { [key: string]: any }) | undefined;
+
+    /**
+     * Search text on navbar.
+     * 
+     * @default 'Search...'
+     * @type string
+     * @memberof Options
+     */
+    searchText?: string;
+
+    /**
+     * Placeholder text on search input.
+     * 
+     * @default 'Search. Use double quotes for stricter results.'
+     * @type string
+     * @memberof Options
+     */
+    placeholderText?: string;
+
+    /**
+     * Text to display when no results are found.
+     * 
+     * @default 'No results found.'
+     * @type string
+     * @memberof Options
+     */
+    noResultsText?: string;
+
+    /**
+     * Text to display when search is complete.
+     * 
+     * @default '{time}ms for {count} results'
+     * @type string
+     * @memberof Options
+     */     
+    searchTimeText?: string;
 }

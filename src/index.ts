@@ -44,14 +44,23 @@ export function SimpleSearch(userOptions: Options): Plugin {
                 }
 
                 const fileData = await buildDocumentation(config.root, userOptions.preambleTransformer);
-                const javaScript: string =
-                    `const regexForContentStripping = ${options.regexForContentStripping}` +
-                    ';\n' +
-                    'const data =' +
-                    JSON.stringify(fileData) +
-                    ';\n' +
-                    'export default { data, regexForContentStripping };';
 
+                const javaScript: string =
+                    `const regexForContentStripping = ${options.regexForContentStripping};
+                    const data = ${JSON.stringify(fileData)};
+                    const searchText = "${options.searchText}";
+                    const placeholderText = "${options.placeholderText}";
+                    const noResultsText = "${options.noResultsText}";
+                    const searchTimeText = "${options.searchTimeText}";
+                    export default { 
+                        data, 
+                        regexForContentStripping, 
+                        searchText, 
+                        placeholderText, 
+                        noResultsText, 
+                        searchTimeText 
+                    };`;
+                    
                 return javaScript;
             }
         },

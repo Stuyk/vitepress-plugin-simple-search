@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, computed } from 'vue';
 
 type FileSearchData = Array<{ title: string; content: string; link: string }>;
 
@@ -12,6 +12,17 @@ const searchResults = ref<FileSearchData>([]);
 const lastTimeoutID = ref<number | undefined>(undefined);
 const msToSearch = ref<number>(0);
 const regexForContentStripping = ref<RegExp>(/[\W_]+/g);
+
+const placeholderText = ref('Search. Use double quotes for stricter results.');
+const searchText = ref('Search...');
+const noResultsText = ref('No results found.');
+const searchTimeText = ref('{time}ms for {count} results');
+
+const searchTime = computed(() => {
+    return searchTimeText.value
+        .replace('{time}', msToSearch.value.toString())
+        .replace('{count}', searchResults.value.length.toString());
+});
 
 const debounce = (callback: Function, wait: number) => {
     if (typeof lastTimeoutID.value !== 'undefined') {
@@ -139,6 +150,10 @@ onMounted(async () => {
         fileData.value = importData.default.data;
         searchResults.value = importData.default.data;
         regexForContentStripping.value = importData.default.regexForContentStripping;
+        searchText.value = importData.default.searchText;
+        placeholderText.value = importData.default.placeholderText;
+        noResultsText.value = importData.default.noResultsText;
+        searchTimeText.value = importData.default.searchTimeText;
     } catch (err) {
         console.log(`Could not load search data from virtual module.`);
         console.log(`Maybe search data includes malformed data?`);
@@ -161,7 +176,7 @@ onMounted(async () => {
                             @input="trySearch"
                             v-model="searchData"
                             class="search-input"
-                            placeholder="Search. Use double quotes for stricter results."
+                            :placeholder="placeholderText"
                             aria-autocomplete="both"
                             autocomplete="off"
                             autocorrect="off"
@@ -177,7 +192,7 @@ onMounted(async () => {
                     </div>
                     <div class="search-results">
                         <div v-if="searchResults.length >= 1">
-                            <div class="search-time">{{ msToSearch }}ms for {{ searchResults.length }} Results</div>
+                            <div class="search-time">{{ searchTime }}</div>
                             <a
                                 class="result"
                                 v-for="(result, index) in searchResults"
@@ -196,13 +211,13 @@ onMounted(async () => {
                                 </div>
                             </a>
                         </div>
-                        <div v-else>No Results</div>
+                        <div v-else>{{ noResultsText }}</div>
                     </div>
                 </div>
             </div>
         </Teleport>
         <div class="search">
-            <div class="search-text" @click="openSearch()">Search...</div>
+            <div class="search-text" @click="openSearch()">{{ searchText }}</div>
         </div>
     </div>
 </template>

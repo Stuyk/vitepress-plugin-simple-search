@@ -7,5 +7,16 @@ declare module '*.vue' {
 declare module 'virtual:simple-search' {
     const regexForContentStripping: RegExp;
     const data: Array<{ title: string; content: string; link: string }>;
-    export default { data, regexForContentStripping };
+    const searchText: string;
+    const placeholderText: string;
+    const noResultsText: string;
+    const searchTimeText: string;
+    export default {
+        data,
+        regexForContentStripping,
+        searchText,
+        placeholderText,
+        noResultsText,
+        searchTimeText,
+    };
 }

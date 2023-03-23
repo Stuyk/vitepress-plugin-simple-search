@@ -4,6 +4,10 @@ let options: Options = {
     baseURL: '',
     regexForContentStripping: /[^a-zA-Z0-9._ ]+/g,
     preambleTransformer: undefined, // No transformation
+    searchText: 'Search...',
+    placeholderText: 'Search. Use double quotes for stricter results.',
+    noResultsText: 'No results found.',
+    searchTimeText: '{time}ms for {count} results',
 };
 
 /**
