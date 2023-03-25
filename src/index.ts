@@ -1,68 +1,53 @@
-import { Plugin } from 'vite';
-import { Options } from './interfaces/options';
-import { setOptions } from './options';
-import { buildDocumentation } from './searchBuilder';
-import fs from 'fs-extra';
+import { Plugin } from "vite";
+import { buildIndexData } from "./indexDataBuilder";
+import { Options } from "./types/options";
+
+export const DEFAULT_OPTIONS: Options = Object.freeze({
+  transform: undefined, // No transformation
+  searchComponentPath: "vitepress-plugin-simple-search/SimpleSearch.vue",
+  searchOptions: {},
+  previewLength: 64,
+  loadingText: "Loading...",
+  searchText: "Search...",
+  placeholderText: "Search. Use double quotes for stricter results.",
+  noResultsText: "No results found.",
+  searchTimeText: "{time}ms for {count} results",
+});
 
 /**
  * Initialize the plugin, and pass additional configuration options.
  *
  * @export
- * @param {Options} options
+ * @param {Partial<Options>} options
  * @return {Plugin}
  */
-export function SimpleSearch(userOptions: Options): Plugin {
-    const options = setOptions(userOptions);
+export function SimpleSearch(userOptions: Partial<Options> = {}): Plugin {
+  const options = { ...DEFAULT_OPTIONS, ...userOptions } as Options;
 
-    let config: any;
-    const virtualModuleId = 'virtual:simple-search';
-    const resolvedVirtualModuleId = '\0' + virtualModuleId;
-
-    return {
-        name: 'simple-search',
-        enforce: 'pre',
-        configResolved(resolvedConfig) {
-            config = resolvedConfig;
+  return {
+    name: "simple-search",
+    enforce: "pre",
+    config: () => ({
+      resolve: {
+        alias: {
+          "./VPNavBarSearch.vue": options.searchComponentPath,
         },
-        config: () => ({
-            resolve: {
-                alias: { './VPNavBarSearch.vue': 'vitepress-plugin-simple-search/Search.vue' },
-            },
-        }),
-        resolveId(id) {
-            if (id === virtualModuleId) {
-                return resolvedVirtualModuleId;
-            }
-        },
-        async load(this, id) {
-            if (id === resolvedVirtualModuleId) {
-                const filePathway = options.docsPath ? options.docsPath : config.root;
-                if (!fs.existsSync(filePathway)) {
-                    console.warn(`File Pathway: ${filePathway} does not exist. Search could not be built.`)
-                    console.warn(`Try 'process.cwd() + your folder'`)
-                    throw new Error(`Docs pathway could not be found.`);
-                }
+      },
+    }),
+    resolveId(id) {
+      if (id === "virtual:simple-search") {
+        return "\0virtual:simple-search";
+      }
+    },
+    async load(this, id) {
+      if (id === "\0virtual:simple-search") {
+        const indexedData = await buildIndexData(options);
 
-                const fileData = await buildDocumentation(config.root, userOptions.preambleTransformer);
-
-                const javaScript: string =
-                    `const regexForContentStripping = ${options.regexForContentStripping};
-                    const data = ${JSON.stringify(fileData)};
-                    const searchText = "${options.searchText}";
-                    const placeholderText = "${options.placeholderText}";
-                    const noResultsText = "${options.noResultsText}";
-                    const searchTimeText = "${options.searchTimeText}";
-                    export default { 
-                        data, 
-                        regexForContentStripping, 
-                        searchText, 
-                        placeholderText, 
-                        noResultsText, 
-                        searchTimeText 
-                    };`;
-                    
-                return javaScript;
-            }
-        },
-    };
+        return `export default ${JSON.stringify({
+          ...options,
+          indexedData,
+        })};`;
+      }
+    },
+  };
 }
