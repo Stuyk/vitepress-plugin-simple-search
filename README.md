@@ -1,6 +1,6 @@
 # Hey Listen!
 
-This repository is no longer necessary. Vitepress has offline search built in as of `alpha 65`.
+This repository is no longer necessary. Vitepress has offline search built in as of `alpha 66`.
 
 ---
 
