@@ -4,6 +4,10 @@ This repository is no longer necessary. Vitepress has offline search built in as
 
 ---
 
+---
+
+---
+
 # Vitepress Simple Search
 
 Vitepress needs better offline search. Let's make it simple and quick.
