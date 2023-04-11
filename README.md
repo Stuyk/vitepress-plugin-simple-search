@@ -2,7 +2,7 @@
 
 This repository is no longer necessary. Vitepress has offline search built in as of `alpha 65`.
 
-![](https://i.imgur.com/j8tDCOZ.png)
+---
 
 # Vitepress Simple Search
 
